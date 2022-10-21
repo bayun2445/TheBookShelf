@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The BookShelf</title>
+</head>
+<body>
+    <main>
+        <section id="input-book">
+            <form>
+                <h2>Input Data Buku</h2>
+                <label for="title">Judul</label>
+                <input type="text" name="title" id="title" placeholder="Judul Buku">
+                <label for="author">Penulis</label>
+                <input type="text" name="author" id="author">
+                <label for="year">Tahun Terbit</label>
+                <input type="number" name="year" id="year" placeholder="eg: 1945">
+            </form>
+        </section>
+        <section id="display-book">
+            <div id="search">
+                <form>
+                    <input type="search" name="search-book" id="search-book"placeholder="Cari buku...">
+                </form>
+            </div>
+            <div class="shelf uncompleted">
+                <h1>Belum Selesai Dibaca</h1>
+
+            </div>
+            <div class="shelf completed">
+                <h1>Selesai Dibaca</h1>
+
+            </div>
+        </section>
+    </main>
+</body>
+</html>
