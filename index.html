@@ -4,36 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
     <title>The BookShelf</title>
 </head>
 <body>
     <main>
         <section id="input-book">
-            <form>
+            <form action="none">
                 <h2>Input Data Buku</h2>
                 <label for="title">Judul</label>
-                <input type="text" name="title" id="title" placeholder="Judul Buku">
+                <input type="text" name="title" id="title" placeholder="eg: Konspirasi Alam Semesta">
                 <label for="author">Penulis</label>
-                <input type="text" name="author" id="author">
+                <input type="text" name="author" id="author" placeholder="eg: Fiersa Besari">
                 <label for="year">Tahun Terbit</label>
-                <input type="number" name="year" id="year" placeholder="eg: 1945">
+                <input type="number" name="year" id="year" placeholder="eg: 2019">
+                <button id="button-add-book">Tambah Buku</button>
             </form>
         </section>
         <section id="display-book">
-            <div id="search">
-                <form>
-                    <input type="search" name="search-book" id="search-book"placeholder="Cari buku...">
-                </form>
-            </div>
-            <div class="shelf uncompleted">
-                <h1>Belum Selesai Dibaca</h1>
-
-            </div>
-            <div class="shelf completed">
-                <h1>Selesai Dibaca</h1>
-
+            <form>
+                <h2>The BookShelf</h2>
+                <input type="search" name="search-book" id="search-book" placeholder="Cari buku...">
+            </form>
+            <div id="shelf-container">
+                <div class="shelf uncompleted">
+                    <h4>Daftar Baca</h4>
+                    
+                </div>
+                <div class="shelf completed">
+                    <h4>Selesai Dibaca</h4>
+            
+                </div>
             </div>
         </section>
     </main>
+
+    <script src="assets/script.js"></script>
 </body>
 </html>

@@ -1,3 +1,88 @@
 * {
+    font-family: 'Coming Soon', cursive;
     box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-inline: 20px;
+}
+
+section {
+    padding: 16px;
+    max-width: 800px;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0 3px 10px 0px #616161;
+    margin-bottom: 20px;
+}
+
+section * {
+    width: 100%;
+}
+
+input[type="text"], input[type="number"] {
+    margin-block: 5px;
+    padding: 5px;
+    height: 30px;
+    border-radius: 15px;
+} 
+
+button {
+    border-radius: 5px;
+    border-style: none;
+    margin-block: 5px;
+    background: linear-gradient(rgb(132, 132, 132), rgb(96, 96, 96));
+}
+
+button:focus {
+    background: linear-gradient(rgb(96, 96, 96), rgb(132, 132, 132));
+}
+
+h2, h4 {
+    text-align: center;
+}
+
+.shelf {
+    margin: 16px;
+    min-width: 200px;
+}
+
+.completed {
+    flex-basis: 50%;
+}
+
+.uncompleted {
+    flex-basis: 50%;
+}
+
+#shelf-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#button-add-book {
+    height: 40px;
+}
+
+.book {
+    border-left: 2px solid black;
+    padding-left: 10px;
+    font-size: small;
+}
+
+.book  button {
+    display: none;
+}
+
+.book:hover  button {
+    display: block;
+}
+
+.book-title {
+    font-weight: bold;
+    font-size: 1.2em;
 }
