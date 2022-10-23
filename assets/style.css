@@ -3,6 +3,21 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+}
+
+header {
+    width: 100%;
+    height: 75px;
+    background-color: #303030;
+    color: white;
+    position: fixed;
+    z-index: 1;
+    text-align: center;
+    align-items: center;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -32,13 +47,15 @@ input[type="text"], input[type="number"] {
 } 
 
 button {
+    color: white;
+    font-size: large;
     border-radius: 5px;
     border-style: none;
     margin-block: 5px;
     background: linear-gradient(rgb(132, 132, 132), rgb(96, 96, 96));
 }
 
-button:focus {
+button:active {
     background: linear-gradient(rgb(96, 96, 96), rgb(132, 132, 132));
 }
 
@@ -66,6 +83,14 @@ h2, h4 {
 
 #button-add-book {
     height: 40px;
+}
+
+#complete {
+    width: 5%;
+}
+
+#input-book {
+    margin-top: 80px;
 }
 
 .book {

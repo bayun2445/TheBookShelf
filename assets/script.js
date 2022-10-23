@@ -1,10 +1,15 @@
 var books = new Array();
-const SHELF_CHANGE = 'shelf-change';
-const buttonAdd = document.getElementById('button-add-book');
+var tempBooks = new Array();
 
-document.addEventListener(SHELF_CHANGE, function() {
+const SHELF_UPDATE = 'shelf-update';
+const STORAGE_KEY = 'saved-book';
+
+const buttonAdd = document.getElementById('button-add-book');
+const searchField = document.getElementById('search-book');
+
+document.addEventListener(SHELF_UPDATE, function() {
     const shelfs = document.querySelectorAll('.shelf');
-    shelfs[0].innerHTML = '<h4>Daftar Baca</h4>';
+    shelfs[0].innerHTML = '<h4>Belum Selesai Dibaca</h4>';
     shelfs[1].innerHTML = '<h4>Selesai Dibaca</h4>';
 
     for (const book of books) {
@@ -15,6 +20,13 @@ document.addEventListener(SHELF_CHANGE, function() {
             shelfs[1].append(newBookElement);
         }
     }
+
+    saveBook();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadBook();
+    document.dispatchEvent(new Event(SHELF_UPDATE));
 });
 
 buttonAdd.addEventListener('click', function(event) {
@@ -24,10 +36,12 @@ buttonAdd.addEventListener('click', function(event) {
     const titleText = document.getElementById('title');
     const authorText = document.getElementById('author');
     const yearText = document.getElementById('year');
+    const completeCheck = document.getElementById('complete');
 
     const title = titleText.value;
     const author = authorText.value;
     const year = yearText.value;
+    const isComplete = completeCheck.checked;
 
     if (title === '' || author === '' || year === '') {
         alert('Detail buku tidak boleh kosong!');
@@ -35,28 +49,52 @@ buttonAdd.addEventListener('click', function(event) {
     }
 
     //adding new book object to books array
-    addNewBook(title, author, year);
+    addNewBook(title, author, year, isComplete);
     
     titleText.value = '';
     authorText.value = '';
     yearText.value = '';
+    completeCheck.checked = false;
 
-    document.dispatchEvent(new Event(SHELF_CHANGE));
+
+    document.dispatchEvent(new Event(SHELF_UPDATE));
 });
 
-function addNewBook(title, author, year) {
-    const newBook = generateBookObject(title, author, year, false);
-    console.log(newBook);
+searchField.addEventListener('input', function(event) {
+    event.preventDefault();
+    const shelfs = document.querySelectorAll('.shelf');
+
+    if (this.value === null || this.value === '') {
+        document.dispatchEvent(new Event(SHELF_UPDATE));
+        return;
+    }
+
+    tempBooks = filterBook(this.value);
+    shelfs[0].innerHTML = '<h4>Belum Selesai Dibaca</h4>';
+    shelfs[1].innerHTML = '<h4>Selesai Dibaca</h4>';
+
+    for (const book of tempBooks) {
+        const newBookElement = generateBookElement(book);
+        if (!book.isCompleted) {
+            shelfs[0].append(newBookElement);
+        } else {
+            shelfs[1].append(newBookElement);
+        }
+    }
+});
+
+function addNewBook(title, author, year, isComplete) {
+    const newBook = generateBookObject(title, author, year, isComplete);
     books.push(newBook);
 }
 
-function generateBookObject(title, author, year, isCompleted) {
+function generateBookObject(title, author, year, isComplete) {
     return {
         id: generateId(),
         title: title,
         author: author,
         year: year,
-        isCompleted: isCompleted,
+        isCompleted: isComplete,
     }
 }
 
@@ -92,7 +130,7 @@ function generateBookElement(bookObject) {
     if (!bookObject.isCompleted){
         buttonMark.innerText = 'Tandai Selesai';
     } else {
-        buttonMark.innerText = 'Tandai Belum Selesai'
+        buttonMark.innerText = 'Tandai Belum Selesai';
     }
 
     buttonDelete.innerText = 'Hapus';
@@ -101,12 +139,12 @@ function generateBookElement(bookObject) {
     const bookId = bookObject.id;
     buttonMark.addEventListener('click', function() {
         setBookMark(bookId);
-        document.dispatchEvent(new Event(SHELF_CHANGE));
+        document.dispatchEvent(new Event(SHELF_UPDATE));
     });
 
     buttonDelete.addEventListener('click', function() {
         deleteBook(bookId);
-        document.dispatchEvent(new Event(SHELF_CHANGE));
+        document.dispatchEvent(new Event(SHELF_UPDATE));
     });
 
     buttonContainer.append(buttonMark, buttonDelete);
@@ -127,10 +165,34 @@ function setBookMark(id) {
 }
 
 function deleteBook(id) {
-    for (let i = 0; i < books.length; i++) {
-        if (id === books[i].id) {
-            books.pop(i);
-        }
-    }
+    // returns the index of book with desired ID
+    const index = books.findIndex(Object => {
+        return Object.id === id;
+    });
+    books.splice(index, 1);        
 }
 
+function saveBook() {
+    const bookJSON = JSON.stringify(books);
+    localStorage.setItem(STORAGE_KEY, bookJSON);
+}
+
+function loadBook() {
+    const savedBook = localStorage.getItem(STORAGE_KEY);
+    books = JSON.parse(savedBook);
+}
+
+function filterBook(str) {
+    let temp = [];
+    for (const book of books) {
+        if (
+            book.title.toLowerCase().includes(str)||
+            book.author.toLowerCase().includes(str) ||
+            book.year.toLowerCase().includes(str)
+        ){
+            temp.push(book);
+        }
+    }
+
+    return temp;
+}
