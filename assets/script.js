@@ -25,8 +25,10 @@ document.addEventListener(SHELF_UPDATE, function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadBook();
-    document.dispatchEvent(new Event(SHELF_UPDATE));
+    if (localStorage.getItem(STORAGE_KEY) !== null) {
+        loadBook();
+        document.dispatchEvent(new Event(SHELF_UPDATE));
+    }
 });
 
 buttonAdd.addEventListener('click', function(event) {
